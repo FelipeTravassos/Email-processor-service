@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -78,12 +79,7 @@ public class RemoveDuplicateIntentService extends IntentService {
      * @param receiver Listener to send result
      */
     private void removeDuplicates(LinkedList<String> list, ResultReceiver receiver) {
-        for (int j, i = 0; i < list.size(); i++) {
-            String item = list.get(i);
-            for (j = i+1;j < list.size(); j++) {
-                if (item.equals(list.get(j))) list.remove(j--);
-            }
-        }
+        list = new LinkedList<>(new HashSet<>(list));
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(LINKED_LIST_KEY, list);
